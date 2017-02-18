@@ -19,9 +19,9 @@
         
         function getDays(){
             $conn = mysqli_connect('localhost', 'root', '', 'mobilita_comune_monza');
-            $query ='SELECT DAY(dati.timestamp) AS "day"
+            $query ='SELECT DATE(dati.timestamp) AS "day" 
                     FROM dati 
-                    GROUP BY "day"';
+                    GROUP BY YEAR(dati.timestamp), MONTH(dati.timestamp), DAY(dati.timestamp)';
             $risultato = mysqli_query($conn, $query);
 
             if($risultato === FALSE) { 
@@ -36,7 +36,7 @@
             $query ='SELECT *
                     FROM dati 
                     WHERE dati.fk_id_anagrafica = '.$idSensor.'
-                    AND DAY(dati.timestamp) = '.$day;
+                    AND DATE(dati.timestamp) = "'.$day.'"';
             
             $risultato = mysqli_query($conn, $query);
 
