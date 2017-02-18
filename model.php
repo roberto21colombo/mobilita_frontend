@@ -33,7 +33,7 @@
         
         function getData($idSensor, $day){
             $conn = mysqli_connect('localhost', 'root', '', 'mobilita_comune_monza');
-            $query ='SELECT *
+            $query ='SELECT dati.conteggio_veicoli
                     FROM dati 
                     WHERE dati.fk_id_anagrafica = '.$idSensor.'
                     AND DATE(dati.timestamp) = "'.$day.'"';
