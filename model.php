@@ -32,19 +32,43 @@
         }
         
         function getData($idSensor, $day){
-            $conn = mysqli_connect('localhost', 'root', '', 'mobilita_comune_monza');
-            $query ='SELECT dati.conteggio_veicoli
-                    FROM dati 
-                    WHERE dati.fk_id_anagrafica = '.$idSensor.'
-                    AND DATE(dati.timestamp) = "'.$day.'"';
             
-            $risultato = mysqli_query($conn, $query);
+            $arrayDay = explode(',', $day);
+            $conn = mysqli_connect('localhost', 'root', '', 'mobilita_comune_monza');
+            
+            foreach ($arrayDay as $day) {
+                $query ='SELECT dati.conteggio_veicoli
+                        FROM dati 
+                        WHERE dati.fk_id_anagrafica = '.$idSensor.'
+                        AND DATE(dati.timestamp) = "'.$day.'"';
 
-            if($risultato === FALSE) { 
-                die(mysql_error()); // TODO: better error handling
+                $risultato = mysqli_query($conn, $query);
+                if($risultato === FALSE) { 
+                    die(mysql_error()); // TODO: better error handling
+                }
+                $arrayRis[] =  $risultato;
             }
+
+            
             mysqli_close($conn);
-            return $risultato;
+            return $arrayRis;
+        }
+        
+        function getCoordById($idSensor){
+            
+            $conn = mysqli_connect('localhost', 'root', '', 'mobilita_comune_monza');
+            
+            $query ='SELECT coordinate 
+                    FROM anagrafica 
+                    WHERE id_sistema_nativo = '.$idSensor;
+
+            $risultato = mysqli_query($conn, $query);
+            if($risultato === FALSE) { 
+                die(mysql_error());
+            }
+        
+            mysqli_close($conn);
+            return mysqli_fetch_array($risultato)['coordinate'];
         }
     }
 ?>
