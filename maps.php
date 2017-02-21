@@ -1,18 +1,14 @@
-
-<div id="map"></div>
 <script>
     var map = null;
-  function initMap() {
-    var monza = {lat: 45.584102,  lng: 9.274613};
-    map = new google.maps.Map(document.getElementById('map'), {
-      zoom: 13,
-      center: monza
-    });
-    <?php echo getMarker() ?>
-  }
-</script>
-<script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCmp0bhnuB-Y8jHMxsKU0aVh8GokE9ef08&callback=initMap">
+    function initMap() {
+        var monza = {lat: 45.584102,  lng: 9.274613};
+        map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 13,
+          center: monza
+        });
+        <?php echo getMarker() ?>
+        
+      }
 </script>
 
 <?php
@@ -27,6 +23,11 @@ function getMarker(){
                 map: map,
                 label: "'.$sens['id_sistema_nativo'].'"
                 });
+            marker_'.$sens['id_sistema_nativo'].'.addListener("click", function() {
+                map.setZoom(18);
+                map.setCenter(marker_'.$sens['id_sistema_nativo'].'.getPosition());
+                document.getElementById("radio_'.$sens['id_sistema_nativo'].'").checked = true;
+            });
         ';
     }
     return $result;

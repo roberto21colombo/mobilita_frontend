@@ -4,7 +4,8 @@
  * Copyright 2012 Stefan Petre
  * Improvements by Andrew Rowls
  * Licensed under the Apache License v2.0 (http://www.apache.org/licenses/LICENSE-2.0)
- */(function(factory){
+ */
+(function(factory){
     if (typeof define === "function" && define.amd) {
         define(["jquery"], factory);
     } else if (typeof exports === 'object') {
@@ -147,13 +148,14 @@
 
 		this.update();
 		this.showMode();
-
+                this.show();
 		if (this.isInline){
 			this.show();
 		}
 	};
 
 	Datepicker.prototype = {
+            
 		constructor: Datepicker,
 
 		_resolveViewName: function(view, default_value){
@@ -425,7 +427,8 @@
 							this.picker.find(e.target).length ||
 							this.isInline
 						)){
-							this.hide();
+                                                        //Tolto la funziona hide così che non scompaia mai.
+							//this.hide();
 						}
 					}, this)
 				}]
@@ -673,8 +676,8 @@
 			var offset = this.component ? this.component.parent().offset() : this.element.offset();
 			var height = this.component ? this.component.outerHeight(true) : this.element.outerHeight(false);
 			var width = this.component ? this.component.outerWidth(true) : this.element.outerWidth(false);
-			var left = offset.left - appendOffset.left,
-				top = offset.top - appendOffset.top;
+                        //original line--> var left = offset.left - appendOffset.left,top = offset.top - appendOffset.top;
+			var left = offset.left - appendOffset.left, top = offset.top;
 
 			if (this.o.container !== 'body') {
 				top += scrollTop;
@@ -2103,5 +2106,5 @@
 	$(function(){
 		datepickerPlugin.call($('[data-provide="datepicker-inline"]'));
 	});
-
+        
 }));

@@ -37,7 +37,7 @@
             $conn = mysqli_connect('localhost', 'root', '', 'mobilita_comune_monza');
             
             foreach ($arrayDay as $day) {
-                $query ='SELECT dati.conteggio_veicoli
+                $query ='SELECT dati.conteggio_veicoli, dati.giorno_settimana, hour(dati.timestamp) as hour
                         FROM dati 
                         WHERE dati.fk_id_anagrafica = '.$idSensor.'
                         AND DATE(dati.timestamp) = "'.$day.'"';
@@ -54,6 +54,7 @@
             return $arrayRis;
         }
         
+        /*
         function getCoordById($idSensor){
             
             $conn = mysqli_connect('localhost', 'root', '', 'mobilita_comune_monza');
@@ -70,5 +71,7 @@
             mysqli_close($conn);
             return mysqli_fetch_array($risultato)['coordinate'];
         }
+         
+         */
     }
 ?>
